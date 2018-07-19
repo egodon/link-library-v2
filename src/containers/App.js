@@ -5,8 +5,10 @@ import Header from './Header';
 import SearchBar from 'components/SearchBar';
 import Links from 'components/Links';
 import Categories from './Categories';
+import netlifyIdentity from 'netlify-identity-widget';
 
-const MLAB_URL = 'https://api.mlab.com/api/1/databases/linklib/collections/links/?s={"date":-1}&apiKey=L9_WEqfVS1SaIdZ5mfToatlnrUtbM2pV&';
+const MLAB_URL =
+  'https://api.mlab.com/api/1/databases/linklib/collections/links/?s={"date":-1}&apiKey=L9_WEqfVS1SaIdZ5mfToatlnrUtbM2pV&';
 
 class App extends Component {
   state = {
@@ -22,10 +24,21 @@ class App extends Component {
     this.setState({ links });
   }
 
+  handleLogIn = () => {
+    netlifyIdentity.open('login');
+  };
+
+  handleSignUp = () => {
+    netlifyIdentity.open('signup');
+  };
+
   render() {
     return (
       <Fragment>
-        <Header />
+        <Header
+          handleLogIn={this.handleLogIn}
+          handleSignUp={this.handleSignUp}
+        />
         <Container>
           <SearchBar />
           <Categories />

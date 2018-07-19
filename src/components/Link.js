@@ -17,7 +17,7 @@ const Panel = styled.li`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   width: 100%;
   height: 6rem;
-  padding: 1rem 1.8rem;
+  padding: 1rem 2.4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

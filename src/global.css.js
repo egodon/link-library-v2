@@ -41,4 +41,15 @@ injectGlobal`
     color: #64b5f6;
   }
 
+  button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+  }
+
 `;

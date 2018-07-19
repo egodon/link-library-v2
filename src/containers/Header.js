@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Header = () => (
+const Header = ({ handleLogIn, handleSignUp }) => (
   <Container>
     <Content>
       <h1>Link Library</h1>
 
       <div className="links">
-        <a href="#">Login</a>
-        <a href="#">Register</a>
+        <button onClick={handleLogIn}>Login</button>
+        <button onClick={handleSignUp}>Signup</button>
       </div>
     </Content>
   </Container>
@@ -20,7 +20,6 @@ const Container = styled.header`
   background: #090909;
   color: ${textColor};
   height: 6rem;
-  padding: 1rem 5rem;
   display: flex;
   align-items: center;
   margin-bottom: 2.8rem;
@@ -40,13 +39,18 @@ const Content = styled.div`
   max-width: 120rem;
 
   .links {
-    width: 12rem;
+    width: 10.5rem;
     display: flex;
     justify-content: space-between;
   }
 
-  a {
+  button {
     color: ${textColor};
+  }
+
+  button:hover {
+    color: #fff;
+    cursor: pointer;
   }
 `;
 

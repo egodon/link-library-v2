@@ -72,6 +72,10 @@ const List = styled.ul`
   .reddit span {
     background: linear-gradient(to bottom right, var(--gradient-category-6)); 
   }
+
+  .other span {
+    background: linear-gradient(to bottom right, var(--gradient-category-7)); 
+  }
 `;
 
 export default Categories;
