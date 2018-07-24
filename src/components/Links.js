@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import Link from './Link';
 
 const Links = ({ linkData }) => (
-  <LinkList>{linkData.map((link) => (
-    <Link key={link._id.$oid} link={link}/>))}
-  </LinkList>
+  <List>{linkData.map((link) => (
+    <Link key={link._id}  link={link}/>))}
+  </List>
 );
 
-const LinkList = styled.ul`
+const List = styled.ul`
   width: 100%;  
 `;
 

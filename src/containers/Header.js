@@ -1,15 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import Button from '../components/Button';
 
-const Header = ({ handleLogIn, handleSignUp }) => (
+const Header = ({ handleLogIn, handleSignUp, handleLogOut, user }) => (
   <Container>
     <Content>
       <h1>Link Library</h1>
-
-      <div className="links">
-        <button onClick={handleLogIn}>Login</button>
-        <button onClick={handleSignUp}>Signup</button>
-      </div>
+      {user ? (
+        <div className="logged-in" onClick={handleLogOut}>
+          <Button text="Add Link" />
+          <Button text="Add Code" />
+          <span>{getInitials(user.user_metadata.full_name)}</span>
+        </div>
+      ) : (
+        <div className="logged-out">
+          <button onClick={handleLogIn}>Login</button>
+          <button onClick={handleSignUp}>Signup</button>
+        </div>
+      )}
     </Content>
   </Container>
 );
@@ -38,10 +47,28 @@ const Content = styled.div`
   margin: 0 auto;
   max-width: 120rem;
 
-  .links {
+  .logged-out {
     width: 10.5rem;
     display: flex;
     justify-content: space-between;
+  }
+
+  .logged-in {
+    width: 22rem;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      padding: 0 6px;
+      line-height: 3.5rem;
+      background: #ff6e40;
+      --size: 3.5rem;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      color: #eee;
+      cursor: pointer;
+    }
   }
 
   button {
@@ -54,4 +81,12 @@ const Content = styled.div`
   }
 `;
 
-export default Header;
+const getInitials = (fullName) =>
+  fullName
+    .split(' ')
+    .map((n) => n[0])
+    .slice(0, 2);
+
+const mapStateToProps = (state) => ({ user: state.user });
+
+export default connect(mapStateToProps)(Header);

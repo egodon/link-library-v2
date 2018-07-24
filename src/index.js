@@ -1,12 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import registerServiceWorker from './registerServiceWorker';
+import netlifyIdentity from 'netlify-identity-widget';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducers from './redux';
+import { authUser } from './redux/user';
 import App from './containers/App';
 import './global.css';
-import registerServiceWorker from './registerServiceWorker';
-import netlifyIdentity from "netlify-identity-widget";
 
-window.netlifyIdentity = netlifyIdentity;
 netlifyIdentity.init();
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(
+  reducers,
+  {
+    user: netlifyIdentity.currentUser(),
+  },
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+window.netlifyIdentity = netlifyIdentity;
+window.store = store;
+
+netlifyIdentity.on('login', (user) => store.dispatch(authUser(user)));
+netlifyIdentity.on('logout', (user) => store.dispatch(authUser(user)));
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+
 registerServiceWorker();

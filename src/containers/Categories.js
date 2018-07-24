@@ -5,25 +5,25 @@ import { searchBarWidth } from 'components/SearchBar';
 const Categories = () => (
   <List>
     <li className="video">
-      <span />Video
+      <span className="color-box" />Video
     </li>
     <li className="tutorial">
-      <span />Tutorial
+      <span className="color-box" />Tutorial
     </li>
     <li className="article">
-      <span />Article
+      <span className="color-box" />Article
     </li>
     <li className="stackoverflow">
-      <span />StackOverflow
+      <span className="color-box" />StackOverflow
     </li>
     <li className="github">
-      <span />Github
+      <span className="color-box" />Github
     </li>
     <li className="reddit">
-      <span />Reddit
+      <span className="color-box" />Reddit
     </li>
     <li className="other">
-      <span />Other
+      <span className="color-box" />Other
     </li>
   </List>
 );
@@ -49,31 +49,31 @@ const List = styled.ul`
     margin-right: .6rem;
   }
 
-  .github span {
+  .github .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-1));
   }
   
-  .tutorial span {
+  .tutorial .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-2));
   }
   
-  .article span {
+  .article .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-3));
   }
 
-  .stackoverflow span {
+  .stackoverflow .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-4));
   }
 
-  .video span {
+  .video .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-5));
   }
 
-  .reddit span {
+  .reddit .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-6)); 
   }
 
-  .other span {
+  .other .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-7)); 
   }
 `;
