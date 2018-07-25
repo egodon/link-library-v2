@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const { uri, linksSchema } = require('./db');
 
+
 let connection = null;
+
 export async function handler(event, context, callback) {
   context.callbackWaitsForEmptyEventLoop = false;
-
-  console.log('PASSWORD', process.env.DB_PASSWORD);
   
   try {
     const response = await run();

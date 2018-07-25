@@ -1,36 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { searchBarWidth } from 'components/SearchBar';
+import { selectCategory } from 'ducks/links';
 
-const Categories = () => (
-  <List>
-    <li className="video">
-      <span className="color-box" />Video
-    </li>
-    <li className="tutorial">
-      <span className="color-box" />Tutorial
-    </li>
-    <li className="article">
-      <span className="color-box" />Article
-    </li>
-    <li className="stackoverflow">
-      <span className="color-box" />StackOverflow
-    </li>
-    <li className="github">
-      <span className="color-box" />Github
-    </li>
-    <li className="reddit">
-      <span className="color-box" />Reddit
-    </li>
-    <li className="other">
-      <span className="color-box" />Other
-    </li>
-  </List>
-);
+class Categories extends Component {
+  state = {
+    selected: null,
+    hovered: null,
+  };
+
+  categories = {
+    video: 'video',
+    tutorial: 'tutorial',
+    article: 'article',
+    stackOverflow: 'stackoverflow',
+    github: 'github',
+    reddit: 'reddit',
+    other: 'other',
+  };
+
+  handleSelect = (category) => {
+    this.setState({ selected: category });
+  };
+
+  handleHover = (category) => {
+    this.setState({ hovered: category });
+  };
+
+  render() {
+    return (
+      <List onMouseLeave={() => this.handleHover(null)}>
+        {Object.keys(this.categories).map((category, index) => (
+          <li
+            key={index}
+            className={category}
+            onMouseEnter={() => this.handleHover(category)}
+            onClick={() => this.props.selectCategory(category)}
+          >
+            <span
+              className={`color-box ${
+                this.state.hovered && this.state.hovered !== category ? 'greyed' : ''
+              }`}
+            />
+            {category[0].toUpperCase() + category.slice(1)}
+          </li>
+        ))}
+      </List>
+    );
+  }
+}
 
 const List = styled.ul`
   margin-bottom: 4rem;
-  width: ${searchBarWidth}
+  width: ${searchBarWidth};
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -38,6 +61,7 @@ const List = styled.ul`
   li {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
 
   li span {
@@ -46,22 +70,27 @@ const List = styled.ul`
     height: var(--box-size);
     width: var(--box-size);
     background: tomato;
-    margin-right: .6rem;
+    margin-right: 0.6rem;
+  }
+
+  .greyed {
+    transition: all 0.2s;
+    filter: grayscale(95%);
   }
 
   .github .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-1));
   }
-  
+
   .tutorial .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-2));
   }
-  
+
   .article .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-3));
   }
 
-  .stackoverflow .color-box {
+  .stackOverflow .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-4));
   }
 
@@ -70,12 +99,15 @@ const List = styled.ul`
   }
 
   .reddit .color-box {
-    background: linear-gradient(to bottom right, var(--gradient-category-6)); 
+    background: linear-gradient(to bottom right, var(--gradient-category-6));
   }
 
   .other .color-box {
-    background: linear-gradient(to bottom right, var(--gradient-category-7)); 
+    background: linear-gradient(to bottom right, var(--gradient-category-7));
   }
 `;
 
-export default Categories;
+export default connect(
+  null,
+  { selectCategory }
+)(Categories);

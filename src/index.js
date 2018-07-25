@@ -4,8 +4,8 @@ import registerServiceWorker from './registerServiceWorker';
 import netlifyIdentity from 'netlify-identity-widget';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from './redux';
-import { authUser } from './redux/user';
+import reducers from 'ducks';
+import { authUser } from 'ducks/user';
 import App from './containers/App';
 import './global.css';
 
