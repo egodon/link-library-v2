@@ -8,7 +8,7 @@ import Header from './Header';
 import SearchBar from 'components/SearchBar';
 import Links from 'components/Links';
 import Categories from './Categories';
-import { updateLinks } from 'redux/links';
+import { updateLinks } from 'ducks/links';
 
 class App extends Component {
   state = {
@@ -17,21 +17,31 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    try {
-      const links = await fetch('/.netlify/functions/links-read-all')
-        .then((res) => res.json())
-        .then((res) => res.response)
-        .catch((e) => console.error(e));
-        this.setState({ links });
-
-        this.props.updateLinks(links);
-        // TODO: Update component based on Redux state
-
-    } catch (error) {
-      this.setState({error})
-    }
-
+    const links = await fetch('/.netlify/functions/links-read-all')
+      .then((res) => res.json())
+      .then((res) => this.props.updateLinks(res.response))
+      .catch((error) => this.setState({ error }));
   }
+
+  componentDidUpdate(_, prevState) {
+    if (this.props.links.data.length !== prevState.links.length) {
+      this.setState({ links: this.props.links.data });
+    }
+  }
+
+  filterByCategory = (link) => {
+    if (this.props.links.category) {
+      return link.category === this.props.links.category;
+    }
+    return true;
+  }
+  
+
+  filterLinks = (links) => (
+    links.filter(link => (
+      this.filterByCategory(link)
+    ))
+  )
 
   handleLogIn = () => {
     netlifyIdentity.open('login');
@@ -43,9 +53,12 @@ class App extends Component {
 
   handleLogOut = () => {
     netlifyIdentity.logout();
-  }
+  };
 
   render() {
+    console.log(this.filterLinks);
+    const displayedLinks = this.filterLinks(this.state.links);
+
     return (
       <Fragment>
         <Header
@@ -56,7 +69,7 @@ class App extends Component {
         <Container>
           <SearchBar />
           <Categories />
-          <Links linkData={this.state.links} />
+          <Links linkData={displayedLinks} />
         </Container>
       </Fragment>
     );
@@ -71,11 +84,13 @@ const Container = styled.main`
   align-items: center;
 `;
 
-
 const mapStateToProps = (state) => ({
   links: state.links,
-})
+});
 
-const ConnectedApp = connect(mapStateToProps, {updateLinks})(App)
+const ConnectedApp = connect(
+  mapStateToProps,
+  { updateLinks }
+)(App);
 
 export default hot(module)(ConnectedApp);
