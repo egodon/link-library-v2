@@ -10,8 +10,6 @@ const Links = ({ linkData }) => (
 
 const List = styled.ul`
   width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
 `;
 
 export default Links;

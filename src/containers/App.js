@@ -30,18 +30,29 @@ class App extends Component {
   }
 
   filterByCategory = (link) => {
-    if (this.props.links.category) {
-      return link.category === this.props.links.category;
+    const {
+      links: { category },
+    } = this.props;
+
+    if (category) {
+      return link.category.toLowerCase() === category;
     }
     return true;
-  }
-  
+  };
 
-  filterLinks = (links) => (
-    links.filter(link => (
-      this.filterByCategory(link)
-    ))
-  )
+  filterBySearch = (link) => {
+    const {
+      links: { searchQuery },
+    } = this.props;
+
+    if (searchQuery) {
+      return link.title.toLowerCase().includes(searchQuery);
+    }
+    return true;
+  };
+
+  filterLinks = (links) =>
+    links.filter(this.filterByCategory).filter(this.filterBySearch);
 
   handleLogIn = () => {
     netlifyIdentity.open('login');

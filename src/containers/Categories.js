@@ -14,11 +14,21 @@ class Categories extends Component {
     video: 'video',
     tutorial: 'tutorial',
     article: 'article',
-    stackOverflow: 'stackoverflow',
+    stackoverflow: 'stackoverflow',
     github: 'github',
     reddit: 'reddit',
     other: 'other',
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.category !== state.selected) {
+      return {
+        ...state,
+        selected: props.category,
+      };
+    }
+    return state;
+  }
 
   handleSelect = (category) => {
     this.setState({ selected: category });
@@ -39,9 +49,13 @@ class Categories extends Component {
             onClick={() => this.props.selectCategory(category)}
           >
             <span
-              className={`color-box ${
-                this.state.hovered && this.state.hovered !== category ? 'greyed' : ''
-              }`}
+              className={`color-box ${(this.state.hovered &&
+              this.state.hovered !== category
+                ? 'greyed'
+                : '') ||
+                (this.state.selected && this.state.selected !== category
+                  ? 'greyed'
+                  : '')}`}
             />
             {category[0].toUpperCase() + category.slice(1)}
           </li>
@@ -90,7 +104,7 @@ const List = styled.ul`
     background: linear-gradient(to bottom right, var(--gradient-category-3));
   }
 
-  .stackOverflow .color-box {
+  .stackoverflow .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-4));
   }
 
@@ -107,7 +121,11 @@ const List = styled.ul`
   }
 `;
 
+const mapStateToProps = (state) => ({
+  category: state.links.category,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { selectCategory }
 )(Categories);

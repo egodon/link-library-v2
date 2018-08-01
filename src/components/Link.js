@@ -1,10 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import Highlighter from 'react-highlight-words';
 
-const Link = ({ link }) => (
+const Link = ({ link, searchQuery }) => (
   <Panel gradient={getCategoryGradient(link.category)}>
     <h4>
-      <a href={link.url}>{link.title}</a>
+      <a href={link.url}>
+        <Highlighter
+          highlightClassName="highlight"
+          searchWords={[searchQuery]}
+          textToHighlight={link.title}
+        />
+      </a>
     </h4>
     <p className="info">
       Submitted by {link.submitter} on {link.submissionDate}
@@ -41,6 +49,12 @@ const Panel = styled.li`
     font-size: 1.2rem;
     color: #999;
   }
+
+  /* TODO: lighten this highlight */
+  .highlight {
+    /* background: linear-gradient(to bottom, ${(props) => props.gradient}); */
+    background-color: #ffaaeeaa;
+  }
 `;
 
 function getCategoryGradient(category) {
@@ -72,4 +86,8 @@ function getCategoryGradient(category) {
   }
 }
 
-export default Link;
+const mapStateToProps = (state) => ({
+  searchQuery: state.links.searchQuery,
+});
+
+export default connect(mapStateToProps)(Link);

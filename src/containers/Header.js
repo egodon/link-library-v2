@@ -1,12 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Button from '../components/Button';
+import Button from 'components/Button';
+import { clearFilters } from 'ducks/links';
 
-const Header = ({ handleLogIn, handleSignUp, handleLogOut, user }) => (
+const Header = ({
+  handleLogIn,
+  handleSignUp,
+  handleLogOut,
+  user,
+  clearFilters,
+}) => (
   <Container>
     <Content>
-      <h1>Link Library</h1>
+      <h1 onClick={clearFilters}>Link Library</h1>
       {user ? (
         <div className="logged-in" onClick={handleLogOut}>
           <Button text="Add Link" />
@@ -36,6 +43,11 @@ const Container = styled.header`
   h1 {
     font-size: 2.6rem;
     font-weight: 500;
+  }
+
+  h1:hover {
+    color: #fff;
+    cursor: pointer;
   }
 `;
 
@@ -89,4 +101,7 @@ const getInitials = (fullName) =>
 
 const mapStateToProps = (state) => ({ user: state.user });
 
-export default connect(mapStateToProps)(Header);
+export default connect(
+  mapStateToProps,
+  { clearFilters }
+)(Header);

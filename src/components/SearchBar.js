@@ -1,8 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { updateSearch } from 'ducks/links';
 
-const SearchBar = () => (
-  <Input placeholder="Search..." />
+const SearchBar = (props) => (
+  <Input
+    onChange={(e) => props.updateSearch(e.target.value)}
+    value={props.searchQuery}
+    placeholder="Search..."
+  />
 );
 
 export const searchBarWidth = '74rem';
@@ -18,5 +24,11 @@ const Input = styled.input`
   margin-bottom: 4rem;
 `;
 
+const mapStateToProps = (state) => ({
+  searchQuery: state.links.searchQuery,
+});
 
-export default SearchBar;
+export default connect(
+  mapStateToProps,
+  { updateSearch }
+)(SearchBar);
