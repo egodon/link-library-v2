@@ -104,7 +104,7 @@ const List = styled.ul`
     background: linear-gradient(to bottom right, var(--gradient-category-3));
   }
 
-  .stackoverflow .color-box {
+  .stackOverflow .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-4));
   }
 
