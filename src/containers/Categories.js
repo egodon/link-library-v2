@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { searchBarWidth } from 'components/SearchBar';
 import { selectCategory } from 'ducks/links';
 
 class Categories extends Component {
   state = {
     selected: null,
-    hovered: null,
+    categoryHovered: null,
   };
 
   categories = {
@@ -35,47 +34,61 @@ class Categories extends Component {
   };
 
   handleHover = (category) => {
-    this.setState({ hovered: category });
+    this.setState({ categoryovered: category });
   };
 
   render() {
     return (
-      <List onMouseLeave={() => this.handleHover(null)}>
-        {Object.keys(this.categories).map((category, index) => (
-          <li
-            key={index}
-            className={category}
-            onMouseEnter={() => this.handleHover(category)}
-            onClick={() => this.props.selectCategory(category)}
-          >
-            <span
-              className={`color-box ${(this.state.hovered &&
-              this.state.hovered !== category
-                ? 'greyed'
-                : '') ||
-                (this.state.selected && this.state.selected !== category
-                  ? 'greyed'
-                  : '')}`}
-            />
-            {category[0].toUpperCase() + category.slice(1)}
-          </li>
-        ))}
-      </List>
+      <Container>
+        <h3>Categories</h3>
+        <List onMouseLeave={() => this.handleHover(null)}>
+          {Object.keys(this.categories).map((category, index) => (
+            <li
+              key={index}
+              className={category}
+              onMouseEnter={() => this.handleHover(category)}
+              onClick={() => this.props.selectCategory(category)}
+            >
+              <span
+                className={
+                  `color-box ${
+                    this.state.selected && this.state.selected !== category
+                      ? 'greyed'
+                      : ''
+                  }` ||
+                  (this.state.categoryHovered &&
+                  this.state.categoryHovered !== category
+                    ? 'greyed'
+                    : '')
+                }
+              />
+              {category[0].toUpperCase() + category.slice(1)}
+            </li>
+          ))}
+        </List>
+      </Container>
     );
   }
 }
 
+const Container = styled.div`
+  position: absolute;
+  left: 3rem;
+  top: 20%;
+
+  h3 {
+    margin-bottom: 1.5rem;
+  }
+`;
+
 const List = styled.ul`
   margin-bottom: 4rem;
-  width: ${searchBarWidth};
-  display: flex;
-  justify-content: space-between;
-  position: relative;
 
   li {
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-bottom: 1.2rem;
   }
 
   li span {
