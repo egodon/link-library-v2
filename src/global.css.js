@@ -51,5 +51,19 @@ injectGlobal`
     color: inherit;
     font: inherit;
   }
-
 `;
+
+/* Helpers */
+
+const styles = getComputedStyle(document.body);
+
+export const getColorFromVariable = (cssVariable) => {
+  if (cssVariable.startsWith('var')) {
+    cssVariable = cssVariable.match(/\(([^)]+)\)/)[1];
+  }
+
+  return styles.getPropertyValue(cssVariable);
+};
+
+export const addAlphaChannel = ({ colors, alphaValue }) =>
+  colors.map((color) => color + alphaValue);

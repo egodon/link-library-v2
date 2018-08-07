@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Highlighter from 'react-highlight-words';
+import { getColorFromVariable, addAlphaChannel } from 'global.css';
 
 const Link = ({ link, searchQuery }) => (
   <Panel gradient={getCategoryGradient(link.category)}>
@@ -50,10 +51,15 @@ const Panel = styled.li`
     color: #999;
   }
 
-  /* TODO: lighten this highlight */
   .highlight {
-    /* background: linear-gradient(to bottom, ${(props) => props.gradient}); */
-    background-color: #ffaaeeaa;
+    background: linear-gradient(
+      to left,
+      ${(props) => {
+        const colors = getColorFromVariable(props.gradient);
+        const colorsArr = colors.split(',');
+        return addAlphaChannel({ colors: colorsArr, alphaValue: '80' }).join(',');
+      }}
+    );
   }
 `;
 

@@ -10,6 +10,7 @@ import Links from 'components/Links';
 import Categories from './Categories';
 import { updateLinks } from 'ducks/links';
 
+
 class App extends Component {
   state = {
     links: [],

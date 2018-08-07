@@ -15,10 +15,12 @@ const Header = ({
     <Content>
       <h1 onClick={clearFilters}>Link Library</h1>
       {user ? (
-        <div className="logged-in" onClick={handleLogOut}>
+        <div className="logged-in">
           <Button text="Add Link" />
           <Button text="Add Code" />
-          <span>{getInitials(user.user_metadata.full_name)}</span>
+          <span onClick={handleLogOut}>
+            {getInitials(user.user_metadata.full_name)}
+          </span>
         </div>
       ) : (
         <div className="logged-out">

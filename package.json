@@ -117,10 +117,7 @@
       "jsx-indent": 0,
       "arrow-parens": [
         1,
-        "always",
-        {
-          "requireForBlockBody": true
-        }
+        "always"
       ],
       "space-before-function-paren": 0,
       "max-len": [
