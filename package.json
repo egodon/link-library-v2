@@ -42,6 +42,7 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "resolve": "1.6.0",
+    "serve": "^10.0.0",
     "style-loader": "0.19.0",
     "styled-components": "^3.3.3",
     "sw-precache-webpack-plugin": "0.11.4",
@@ -56,7 +57,8 @@
     "start:lambda": "cross-env-shell NODE_ENV=development && netlify-lambda serve src/lambda",
     "build": "node scripts/build.js",
     "build:lambda": "export NODE_ENV=production && netlify-lambda build src/lambda",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "postbuild": "react-snap"
   },
   "proxy": {
     "/.netlify/functions": {
@@ -130,6 +132,10 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "react-hot-loader": "^4.3.3"
+    "react-hot-loader": "^4.3.3",
+    "react-snap": "^1.10.1"
+  },
+  "reactSnap": {
+    "cacheAjaxRequests": true
   }
 }

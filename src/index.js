@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import netlifyIdentity from 'netlify-identity-widget';
 import { createStore } from 'redux';
@@ -25,11 +25,21 @@ window.store = store;
 netlifyIdentity.on('login', (user) => store.dispatch(authUser(user)));
 netlifyIdentity.on('logout', (user) => store.dispatch(authUser(user)));
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+const rootElement = document.getElementById('root');
+if (rootElement.hasChildNodes()) {
+  hydrate(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    rootElement
+  );
+} else {
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    rootElement
+  );
+}
 
 registerServiceWorker();
