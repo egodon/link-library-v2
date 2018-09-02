@@ -10,7 +10,7 @@ const LinkLoader = (props) => (
     secondaryColor="#ecebeb"
     {...props}
   >
-		<rect x="0" y="0" rx="5" ry="5" width="380" height="20" /> 
+		<rect x="0" y="0" rx="5" ry="5" width="380" height="25" /> 
   </ContentLoader>
 );
 

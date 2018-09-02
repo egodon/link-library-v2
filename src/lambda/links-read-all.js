@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 const { uri, linksSchema } = require('./db');
 
-
 let connection = null;
 
 export async function handler(event, context, callback) {
   context.callbackWaitsForEmptyEventLoop = false;
-  
+
   try {
     const response = await run();
     callback(null, {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Highlighter from 'react-highlight-words';
 import { getColorFromVariable, addAlphaChannel } from 'global.css';
 
@@ -21,6 +21,15 @@ const Link = ({ link, searchQuery }) => (
   </Panel>
 );
 
+const animateIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 const Panel = styled.li`
   position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
@@ -32,6 +41,7 @@ const Panel = styled.li`
   justify-content: center;
   margin-bottom: 1.8rem;
   background: #fafafa;
+  animation: ${animateIn} .4s ease;
 
   &::before {
     content: '';

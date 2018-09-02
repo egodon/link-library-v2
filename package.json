@@ -41,6 +41,7 @@
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.3.1",
     "react-highlight-words": "^0.12.0",
+    "react-pose": "^3.2.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "resolve": "1.6.0",
