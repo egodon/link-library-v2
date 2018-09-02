@@ -42,4 +42,6 @@ if (rootElement.hasChildNodes()) {
   );
 }
 
+// TODO: integrate redux with react-snap and refactor above
+
 registerServiceWorker();
