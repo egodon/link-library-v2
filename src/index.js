@@ -2,22 +2,27 @@ import React from 'react';
 import { hydrate, render } from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import netlifyIdentity from 'netlify-identity-widget';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from 'ducks';
+import createSagaMiddleware from 'redux-saga';
+import reducer, { rootSaga } from 'ducks';
 import { authUser } from 'ducks/user';
 import App from './containers/App';
 import './global.css';
 
 netlifyIdentity.init();
+const sagaMiddleware = createSagaMiddleware();
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  reducers,
+  reducer,
   {
     user: netlifyIdentity.currentUser(),
   },
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
+
+sagaMiddleware.run(rootSaga);
 
 window.netlifyIdentity = netlifyIdentity;
 window.store = store;

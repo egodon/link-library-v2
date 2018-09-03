@@ -7,10 +7,10 @@ export async function handler(event, context, callback) {
   context.callbackWaitsForEmptyEventLoop = false;
 
   try {
-    const response = await run();
+    const data = await run();
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify({ response }),
+      body: JSON.stringify({ data }),
     });
   } catch (error) {
     callback(error);

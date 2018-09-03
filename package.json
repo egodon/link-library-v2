@@ -44,6 +44,7 @@
     "react-pose": "^3.2.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
     "resolve": "1.6.0",
     "serve": "^10.0.0",
     "style-loader": "0.19.0",

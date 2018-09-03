@@ -2,14 +2,12 @@ import React, { Component, Fragment } from 'react';
 import { hot } from 'react-hot-loader';
 import styled from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Header from './Header';
 import SearchBar from 'components/SearchBar';
 import Links from 'components/Links';
 import Categories from './Categories';
-import { updateLinks } from 'ducks/links';
-
+import { getLinks } from 'ducks/links';
 
 class App extends Component {
   state = {
@@ -17,11 +15,8 @@ class App extends Component {
     error: null,
   };
 
-  async componentDidMount() {
-    const links = await fetch('/.netlify/functions/links-read-all')
-      .then((res) => res.json())
-      .then((res) => this.props.updateLinks(res.response))
-      .catch((error) => this.setState({ error }));
+  componentDidMount() {
+    this.props.getLinks();
   }
 
   componentDidUpdate(_, prevState) {
@@ -80,7 +75,10 @@ class App extends Component {
         <Container>
           <SearchBar />
           <Categories />
-          <Links linkData={displayedLinks} />
+          <Links
+            linkData={displayedLinks}
+            isFetchingLinks={this.props.links.fetching}
+          />
         </Container>
       </Fragment>
     );
@@ -101,7 +99,7 @@ const mapStateToProps = (state) => ({
 
 const ConnectedApp = connect(
   mapStateToProps,
-  { updateLinks }
+  { getLinks }
 )(App);
 
 export default hot(module)(ConnectedApp);
