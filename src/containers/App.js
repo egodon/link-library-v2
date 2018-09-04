@@ -3,11 +3,13 @@ import { hot } from 'react-hot-loader';
 import styled from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
 import { connect } from 'react-redux';
+import times from 'lodash/times';
+import { getLinks } from 'ducks/links';
 import Header from './Header';
 import SearchBar from 'components/SearchBar';
 import Links from 'components/Links';
 import Categories from './Categories';
-import { getLinks } from 'ducks/links';
+import LinkLoader from 'components/LinkLoader';
 
 class App extends Component {
   state = {
@@ -75,10 +77,14 @@ class App extends Component {
         <Container>
           <SearchBar />
           <Categories />
-          <Links
-            linkData={displayedLinks}
-            isFetchingLinks={this.props.links.fetching}
-          />
+          {this.props.links.fetching ? (
+            times(20, (index) => <LinkLoader key={index} />)
+          ) : (
+            <Links
+              links={displayedLinks}
+              isFetchingLinks={this.props.links.fetching}
+            />
+          )}
         </Container>
       </Fragment>
     );

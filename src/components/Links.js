@@ -1,21 +1,36 @@
 import React from 'react';
-import times from 'lodash/times';
 import styled from 'styled-components';
 import Link from './Link';
-import LinkLoader from './LinkLoader';
+import Icon, { icons } from './Icon';
 
-const Links = ({ linkData, isFetchingLinks }) => (
+const Links = ({ links }) => (
   <List>
-    {isFetchingLinks
-      ? times(20, (index) => <LinkLoader key={index} />)
-      : linkData.map((link) => (
-          <Link initialPose="exit" pose="enter" key={link._id} link={link} />
-        ))}
+    {links.length > 0 ? (
+      links.map((link) => (
+        <Link initialPose="exit" pose="enter" key={link._id} link={link} />
+      ))
+    ) : (
+      <NoLinks>
+        <Icon icon={icons.sadFace} size={30}/>
+        No links found!
+      </NoLinks>
+    )}
   </List>
 );
 
 const List = styled.ul`
   width: 80%;
+`;
+
+const NoLinks = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2rem;
+  align-items: center;
+
+  svg {
+    justify-self: end;
+  }
 `;
 
 export default Links;

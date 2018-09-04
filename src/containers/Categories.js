@@ -51,15 +51,9 @@ class Categories extends Component {
             >
               <span
                 className={
-                  `color-box ${
-                    this.state.selected && this.state.selected !== category
-                      ? 'greyed'
-                      : ''
-                  }` ||
-                  (this.state.categoryHovered &&
-                  this.state.categoryHovered !== category
+                  this.state.selected && this.state.selected !== category
                     ? 'greyed'
-                    : '')
+                    : 'color-box'
                 }
               />
               {category[0].toUpperCase() + category.slice(1)}
@@ -96,13 +90,13 @@ const List = styled.ul`
     --box-size: 20px;
     height: var(--box-size);
     width: var(--box-size);
-    background: tomato;
+    background: black;
     margin-right: 0.6rem;
   }
 
   .greyed {
-    transition: all 0.2s;
-    filter: grayscale(95%);
+    transition: all 0.1s;
+    background: #9e9e9e;
   }
 
   .github .color-box {
@@ -117,7 +111,7 @@ const List = styled.ul`
     background: linear-gradient(to bottom right, var(--gradient-category-3));
   }
 
-  .stackOverflow .color-box {
+  .stackoverflow .color-box {
     background: linear-gradient(to bottom right, var(--gradient-category-4));
   }
 
