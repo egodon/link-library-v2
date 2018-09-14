@@ -1,4 +1,4 @@
-export const AUTH_USER = 'AUTH_USER';
+export const AUTH_USER = '[user] auth';
 
 export const authUser = (user = null) => ({
   type: AUTH_USER,

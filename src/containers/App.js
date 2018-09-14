@@ -1,57 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { hot } from 'react-hot-loader';
-import styled from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
-import { connect } from 'react-redux';
-import times from 'lodash/times';
-import { getLinks } from 'ducks/links';
-import Header from './Header';
-import SearchBar from 'components/SearchBar';
-import Links from 'components/Links';
-import Categories from './Categories';
-import LinkLoader from 'components/LinkLoader';
+import styled from 'styled-components';
+import { Router } from '@reach/router';
+import Header, { HEADER_HEIGHT } from './Header';
+import HomePage from './HomePage';
+import AddLinkPage from './AddLinkPage';
 
 class App extends Component {
-  state = {
-    links: [],
-    error: null,
-  };
-
-  componentDidMount() {
-    this.props.getLinks();
-  }
-
-  componentDidUpdate(_, prevState) {
-    if (this.props.links.data.length !== prevState.links.length) {
-      this.setState({ links: this.props.links.data });
-    }
-  }
-
-  filterByCategory = (link) => {
-    const {
-      links: { category },
-    } = this.props;
-
-    if (category) {
-      return link.category.toLowerCase() === category;
-    }
-    return true;
-  };
-
-  filterBySearch = (link) => {
-    const {
-      links: { searchQuery },
-    } = this.props;
-
-    if (searchQuery) {
-      return link.title.toLowerCase().includes(searchQuery);
-    }
-    return true;
-  };
-
-  filterLinks = (links) =>
-    links.filter(this.filterByCategory).filter(this.filterBySearch);
-
   handleLogIn = () => {
     netlifyIdentity.open('login');
   };
@@ -65,8 +21,6 @@ class App extends Component {
   };
 
   render() {
-    const displayedLinks = this.filterLinks(this.state.links);
-
     return (
       <Fragment>
         <Header
@@ -74,38 +28,21 @@ class App extends Component {
           handleSignUp={this.handleSignUp}
           handleLogOut={this.handleLogOut}
         />
-        <Container>
-          <SearchBar />
-          <Categories />
-          {this.props.links.fetching ? (
-            times(20, (index) => <LinkLoader key={index} />)
-          ) : (
-            <Links
-              links={displayedLinks}
-              isFetchingLinks={this.props.links.fetching}
-            />
-          )}
-        </Container>
+        <Main>
+          <Router>
+            <HomePage path="/" />
+            <AddLinkPage path="add-link" />
+          </Router>
+        </Main>
       </Fragment>
     );
   }
 }
 
-const Container = styled.main`
+const Main = styled.main`
   max-width: 120rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0 auto; 
+  margin-top: ${HEADER_HEIGHT};
 `;
 
-const mapStateToProps = (state) => ({
-  links: state.links,
-});
-
-const ConnectedApp = connect(
-  mapStateToProps,
-  { getLinks }
-)(App);
-
-export default hot(module)(ConnectedApp);
+export default hot(module)(App);

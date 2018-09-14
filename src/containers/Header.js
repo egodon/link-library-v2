@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Button from 'components/Button';
+import { Link } from '@reach/router';
 import { clearFilters } from 'ducks/links';
 
 const Header = ({
@@ -13,11 +13,13 @@ const Header = ({
 }) => (
   <Container>
     <Content>
-      <h1 onClick={clearFilters}>Link Library</h1>
+      <Link to="/">
+        <h1 onClick={clearFilters}>Link Library</h1>
+      </Link>
       {user ? (
         <div className="logged-in">
-          <Button text="Add Link" />
-          <Button text="Add Code" />
+          <Link to="add-link">Add Link</Link>
+          <Link to="add-note">Add Note</Link>
           <span onClick={handleLogOut}>
             {getInitials(user.user_metadata.full_name)}
           </span>
@@ -33,14 +35,19 @@ const Header = ({
 );
 
 const textColor = '#9d9d9d';
+export const HEADER_HEIGHT = '6rem';
 
 const Container = styled.header`
+  position: fixed;
+  top: 0;
   background: #090909;
   color: ${textColor};
-  height: 6rem;
+  height: ${HEADER_HEIGHT};
   display: flex;
   align-items: center;
   margin-bottom: 2.8rem;
+  width: 100vw;
+  z-index: 100;
 
   h1 {
     font-size: 2.6rem;
@@ -70,6 +77,7 @@ const Content = styled.div`
   .logged-in {
     width: 22rem;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     span {
@@ -85,13 +93,17 @@ const Content = styled.div`
     }
   }
 
-  button {
+  a {
     color: ${textColor};
   }
 
-  button:hover {
+  a:hover {
     color: #fff;
     cursor: pointer;
+  }
+
+  a[aria-current=page] {
+    color: #fff;
   }
 `;
 

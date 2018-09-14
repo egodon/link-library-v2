@@ -1,4 +1,4 @@
-const BASE_URL = '/.netlify/functions/';
+import { BASE_URL, POST } from './consts';
 
 const checkStatus = (res) => {
   if (res.status >= 200 && res.status < 300) {
@@ -17,11 +17,23 @@ const parseJson = (res) => res.json();
 
 const returnData = (res) => res.data;
 
-export default {
-  async getLinks() {
+export default class LinkApi {
+  
+  async getAll() {
     return await fetch(`${BASE_URL}/links-read-all`)
       .then(checkStatus)
       .then(parseJson)
       .then(returnData);
-  },
+  }
+
+  async add(link) {
+    return await fetch(`${BASE_URL}/links-add`, {
+      method: POST,
+      body: JSON.stringify(link)
+    })
+    .then(checkStatus)
+    .then(parseJson)
+    .then(returnData);
+  }
+
 };

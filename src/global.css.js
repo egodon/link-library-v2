@@ -15,6 +15,16 @@ injectGlobal`
     --gradient-category-5:  #E91E63,#F06292;
     --gradient-category-6:  #FFC107,#FFD54F;
     --gradient-category-7:  #3F51B5,#7986CB;
+
+    /* Colors */
+    --gray-line: #E0E0E0;
+
+    --border-radius: 2px;
+
+    /* Font-sizes */
+    --fs-large: 2rem;
+    --fs-medium: 1.6rem;
+    --fs-small: 1.2rem;
   }
 
   html {

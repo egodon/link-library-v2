@@ -66,7 +66,7 @@ class Categories extends Component {
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   left: 3rem;
   top: 20%;
 

@@ -1,0 +1,1 @@
+export const inputMaxWidth = '50rem';

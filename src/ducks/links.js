@@ -1,13 +1,17 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import Api from 'api';
+import LinkApi from 'api';
+
+const api = new LinkApi();
 
 /* Actions */
-export const LINKS_REQUESTING = 'LINKS_REQUESTING';
-export const LINKS_UPDATE = 'LINKS_UPDATE';
-export const LINKS_REQUEST_FAILED = 'LINKS_REQUEST_FAILED';
-export const SELECT_CATEGORY = 'SELECT_CATEGORY';
-export const UPDATE_SEARCH = 'UPDATE_SEARCH';
-export const CLEAR_FILTERS = 'CLEAR_FILTERS';
+export const LINKS_REQUESTING = '[links] requesting_all';
+export const LINKS_UPDATE = '[links] update';
+export const LINKS_ADD_REQUEST = '[links] add_request';
+export const LINKS_ADD = '[links] add';
+export const LINKS_REQUEST_FAILED = '[links] request_failed';
+export const SELECT_CATEGORY = '[links] select_category';
+export const UPDATE_SEARCH = '[links] update_search';
+export const CLEAR_FILTERS = '[links] clear_filters';
 
 /* Action creators */
 export const getLinks = () => ({
@@ -17,6 +21,11 @@ export const getLinks = () => ({
 export const updateLinks = (links) => ({
   type: LINKS_UPDATE,
   links,
+});
+
+export const addLink = (link) => ({
+  type: LINKS_ADD_REQUEST,
+  link,
 });
 
 export const selectCategory = (category) => ({
@@ -89,15 +98,28 @@ export default (state = initialState, action) => {
 };
 
 /* Sagas */
-export function* watchLinks() {
+export function* watcherGetLinks() {
   yield takeLatest(LINKS_REQUESTING, fetchLinks);
+}
+
+export function* watcherAddLink() {
+  yield takeLatest(LINKS_ADD_REQUEST, addLinkRequest);
 }
 
 function* fetchLinks() {
   try {
-    const links = yield call(Api.getLinks);
+    const links = yield call(api.getAll);
     yield put({ type: LINKS_UPDATE, links });
   } catch (error) {
     yield put({ type: LINKS_REQUEST_FAILED, error });
+  }
+}
+
+function* addLinkRequest({ link }) {
+  try {
+    const res = yield call(api.add, link);
+    yield put({ type: LINKS_ADD, res });
+  } catch(error) {
+    yield put({ type: LINKS_REQUEST_FAILED, error});
   }
 }
