@@ -2,3 +2,8 @@
   Command = "yarn build && yarn build:lambda"
   Functions = "lambda"
   Publish = "build"
+
+[[redirects]]
+  from = "/add-link"
+  to = "/add-link/index.html"
+  status = 200
