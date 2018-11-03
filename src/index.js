@@ -49,4 +49,11 @@ if (rootElement.hasChildNodes()) {
 
 // TODO: integrate redux with react-snap and refactor above
 
+
+/* 
+Disable service worker for now since it loads the wrong index.html
+for certain pages
+
 registerServiceWorker();
+
+*/
