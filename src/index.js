@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducer, { rootSaga } from 'ducks';
 import { authUser } from 'ducks/user';
 import App from './containers/App';
-import './global.css';
+import 'style/global.css';
 
 netlifyIdentity.init();
 const sagaMiddleware = createSagaMiddleware();

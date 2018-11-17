@@ -45,7 +45,7 @@ export const clearFilters = () => ({
 /* Reducer */
 const initialState = {
   data: [],
-  fetching: false,
+  fetching: true,
   error: null,
   category: null,
   searchQuery: '',

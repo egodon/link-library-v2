@@ -6,8 +6,8 @@ import Icon, { icons } from './Icon';
 const Links = ({ links }) => (
   <List>
     {links.length > 0 ? (
-      links.map((link) => (
-        <Link initialPose="exit" pose="enter" key={link._id} link={link} />
+      links.map((link, index) => (
+        <Link key={link._id} link={link} delay={index * 20}/>
       ))
     ) : (
       <NoLinks>

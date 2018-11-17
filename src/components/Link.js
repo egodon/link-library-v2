@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import Highlighter from 'react-highlight-words';
-import { getColorFromVariable, addAlphaChannel } from 'global.css';
+import { getColorFromVariable, addAlphaChannel } from 'style/global.css';
+import { fadeIn } from 'style/animations.css';
 
-const Link = ({ link, searchQuery }) => (
-  <Panel gradient={getCategoryGradient(link.category)}>
+const Link = ({ link, searchQuery, delay }) => (
+  <AnimatedPanel gradient={getCategoryGradient(link.category)} delay={delay}>
     <h4>
       <a href={link.url}>
         <Highlighter
@@ -18,17 +19,8 @@ const Link = ({ link, searchQuery }) => (
     <p className="info">
       Submitted by {link.submitter} on {link.submissionDate}
     </p>
-  </Panel>
+  </AnimatedPanel>
 );
-
-const animateIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
 
 const Panel = styled.li`
   position: relative;
@@ -41,7 +33,7 @@ const Panel = styled.li`
   justify-content: center;
   margin-bottom: 1.8rem;
   background: #fafafa;
-  animation: ${animateIn} .4s ease;
+  opacity: 0;
 
   &::before {
     content: '';
@@ -72,6 +64,11 @@ const Panel = styled.li`
     );
   }
 `;
+
+const AnimatedPanel = styled(Panel)`
+  animation: ${fadeIn} 0.2s ${(p) => p.delay}ms ease-in forwards;
+`;
+
 
 function getCategoryGradient(category) {
   const c = category.toLowerCase();
