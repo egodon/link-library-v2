@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
-const { uri, linksSchema } = require('./db');
+const chalk = require('chalk');
+const { uri, linksSchema, Link } = require('./db');
 
 let connection = null;
 
 export async function handler(event, context, callback) {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  //TODO: get link from event object and send to mlab
+  console.log('event', event.body);
+
+  const body = JSON.parse(event.body);
 
   try {
-    const data = await run();
+    const data = await run(body);
     callback(null, {
       statusCode: 200,
       body: JSON.stringify({ data }),
@@ -19,7 +22,7 @@ export async function handler(event, context, callback) {
   }
 }
 
-async function run() {
+async function run(body) {
   if (connection == null) {
     connection = await mongoose.createConnection(uri, {
       bufferCommands: false,
@@ -28,10 +31,23 @@ async function run() {
     });
     connection.model('Link', linksSchema);
   }
+  
+  const Link = connection.model('Link', linksSchema);
 
-  const M = connection.model('Link');
+  const link = new Link({
+    title: body.title,
+    url: body.url,
+    category: body.category,
+    submissionDate: new Date(),
+    submitter: body.username,
+  });
 
-  const links = await M.find({}).sort({ _id: -1 });
+  link.save((err) => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log(chalk.green(`Link ${link} successfully added.`));
+  });
 
-  return links;
+  return link;
 }

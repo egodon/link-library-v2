@@ -36,8 +36,8 @@ class AddLinkPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
-    this.props.addLink(this.state.linkData);
+    const { username } = this.props;
+    this.props.addLink({ ...this.state.linkData, username });
   };
 
   render() {
@@ -98,7 +98,11 @@ const Container = styled.div`
   }
 `;
 
+const mapStateToProps = (state) => ({
+  username: state.user.user_metadata.full_name,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { addLink }
 )(AddLinkPage);

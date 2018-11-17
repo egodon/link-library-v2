@@ -8,7 +8,7 @@ export async function handler(event, context, callback) {
 
   try {
     const data = await run();
-    callback(null, {
+    return callback(null, {
       statusCode: 200,
       body: JSON.stringify({ data }),
     });
