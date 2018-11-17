@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import netlifyIdentity from 'netlify-identity-widget';
 import { connect } from 'react-redux';
 import { Link } from '@reach/router';
 import { clearFilters } from 'ducks/links';
 
 const Header = ({
-  handleLogIn,
-  handleSignUp,
-  handleLogOut,
   user,
   clearFilters,
 }) => (
@@ -16,18 +14,18 @@ const Header = ({
       <Link to="/">
         <h1 onClick={clearFilters}>Link Library</h1>
       </Link>
-      {user ? (
+      {user && user.user_metadata.full_name ? (
         <div className="logged-in">
           <Link to="add-link">Add Link</Link>
           <Link to="add-note">Add Note</Link>
-          <span onClick={handleLogOut}>
+          <span onClick={netlifyIdentity.logout}>
             {getInitials(user.user_metadata.full_name)}
           </span>
         </div>
       ) : (
         <div className="logged-out">
-          <button onClick={handleLogIn}>Login</button>
-          <button onClick={handleSignUp}>Signup</button>
+          <button onClick={() => netlifyIdentity.open('login')}>Login</button>
+          <button onClick={() => netlifyIdentity.open('signup')}>Signup</button>
         </div>
       )}
     </Content>
@@ -69,13 +67,11 @@ const Content = styled.div`
   max-width: 120rem;
 
   .logged-out {
-    width: 10.5rem;
     display: flex;
     justify-content: space-between;
   }
 
   .logged-in {
-    width: 22rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -93,10 +89,16 @@ const Content = styled.div`
     }
   }
 
+  a:not(:last-child),
+  button:not(:last-child) {
+    margin-right: 1rem;
+  }
+
   a {
     color: ${textColor};
   }
 
+  button:hover,
   a:hover {
     color: #fff;
     cursor: pointer;

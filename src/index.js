@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrate, render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import netlifyIdentity from 'netlify-identity-widget';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -31,24 +31,16 @@ netlifyIdentity.on('login', (user) => store.dispatch(authUser(user)));
 netlifyIdentity.on('logout', (user) => store.dispatch(authUser(user)));
 
 const rootElement = document.getElementById('root');
-if (rootElement.hasChildNodes()) {
-  hydrate(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    rootElement
-  );
-} else {
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    rootElement
-  );
-}
+const render = rootElement.hasChildNodes() ? ReactDOM.hydrate : ReactDOM.render;
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootElement
+);
 
 // TODO: integrate redux with react-snap and refactor above
-
 
 /* 
 Disable service worker for now since it loads the wrong index.html
