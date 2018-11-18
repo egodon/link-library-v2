@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const chalk = require('chalk');
-const { uri, linksSchema, Link } = require('./db');
+import mongoose from 'mongoose';
+import chalk from 'chalk';
+import { uri, linksSchema } from './db';
 
 let connection = null;
 
@@ -31,23 +31,16 @@ async function run(body) {
     });
     connection.model('Link', linksSchema);
   }
-  
+
   const Link = connection.model('Link', linksSchema);
 
-  const link = new Link({
-    title: body.title,
-    url: body.url,
-    category: body.category,
-    submissionDate: new Date(),
-    submitter: body.username,
-  });
+  const query = { _id: body._id };
 
-  link.save((err) => {
+  Link.remove(query, (err) => {
     if (err) {
-      return console.error(err);
+      console.log(chalk.red('Error while deleting link', body.url));
+      return;
     }
-    console.log(chalk.green(`Link ${link} successfully added.`));
+    console.log(chalk.green('Successfully deleted link', body.url));
   });
-
-  return link;
 }

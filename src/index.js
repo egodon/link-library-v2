@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 import netlifyIdentity from 'netlify-identity-widget';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -45,7 +45,6 @@ render(
 /* 
 Disable service worker for now since it loads the wrong index.html
 for certain pages
-
-registerServiceWorker();
-
 */
+
+serviceWorker.unregister();

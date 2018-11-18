@@ -7,7 +7,9 @@ const api = new LinkApi();
 export const LINKS_REQUESTING = '[links] requesting_all';
 export const LINKS_UPDATE = '[links] update';
 export const LINKS_ADD_REQUEST = '[links] add_request';
-export const LINKS_ADD = '[links] add';
+export const LINKS_ADD_SUCCESS = '[links] add_success';
+export const LINKS_DELETE_REQUEST = '[links] delete_request';
+export const LINKS_DELETE_SUCCESS = '[links] delete_success';
 export const LINKS_REQUEST_FAILED = '[links] request_failed';
 export const SELECT_CATEGORY = '[links] select_category';
 export const UPDATE_SEARCH = '[links] update_search';
@@ -25,6 +27,11 @@ export const updateLinks = (links) => ({
 
 export const addLink = (link) => ({
   type: LINKS_ADD_REQUEST,
+  link,
+});
+
+export const deleteLink = (link) => ({
+  type: LINKS_DELETE_REQUEST,
   link,
 });
 
@@ -106,6 +113,10 @@ export function* watcherAddLink() {
   yield takeLatest(LINKS_ADD_REQUEST, addLinkRequest);
 }
 
+export function* watcherDeleteLink() {
+  yield takeLatest(LINKS_DELETE_REQUEST, deleteLinkRequest);
+}
+
 function* fetchLinks() {
   try {
     const links = yield call(api.getAll);
@@ -118,8 +129,18 @@ function* fetchLinks() {
 function* addLinkRequest({ link }) {
   try {
     const res = yield call(api.add, link);
-    yield put({ type: LINKS_ADD, res });
-  } catch(error) {
-    yield put({ type: LINKS_REQUEST_FAILED, error});
+    yield put({ type: LINKS_ADD_SUCCESS, res });
+  } catch (error) {
+    yield put({ type: LINKS_REQUEST_FAILED, error });
+  }
+}
+
+function* deleteLinkRequest({ link }) {
+  try {
+    console.log("hey");
+    const res = yield call(api.delete, link);
+    yield put({ type: LINKS_DELETE_SUCCESS, res });
+  } catch (error) {
+    yield put({ type: LINKS_REQUEST_FAILED, error });
   }
 }

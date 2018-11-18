@@ -1,6 +1,6 @@
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
-injectGlobal`
+export default createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
@@ -18,6 +18,8 @@ injectGlobal`
 
     /* Colors */
     --gray-line: #E0E0E0;
+    --gray-600: #757575;
+    --gray-900: #212121;
 
     --border-radius: 2px;
 

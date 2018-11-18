@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const { DB_PASSWORD } = process.env;
-const uri = `mongodb://egodon:${DB_PASSWORD}@ds135592.mlab.com:35592/linklib`;
+export const uri = `mongodb://egodon:${DB_PASSWORD}@ds135592.mlab.com:35592/linklib`;
 
 export const linksSchema = mongoose.Schema({
   title: {
@@ -25,10 +26,3 @@ export const linksSchema = mongoose.Schema({
     type: String,
   },
 });
-
-const Link = (module.exports = mongoose.model('Link', linksSchema));
-
-module.exports = {
-  uri,
-  Link,
-};

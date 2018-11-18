@@ -1,4 +1,4 @@
-import { BASE_URL, POST } from './consts';
+import { BASE_URL, POST, DELETE } from './constants';
 
 const checkStatus = (res) => {
   if (res.status >= 200 && res.status < 300) {
@@ -18,7 +18,6 @@ const parseJson = (res) => res.json();
 const returnData = (res) => res.data;
 
 export default class LinkApi {
-  
   async getAll() {
     return await fetch(`${BASE_URL}/links-read-all`)
       .then(checkStatus)
@@ -27,13 +26,22 @@ export default class LinkApi {
   }
 
   async add(link) {
-    return await fetch(`${BASE_URL}/links-add`, {
+    return await fetch(`${BASE_URL}/link-add`, {
       method: POST,
-      body: JSON.stringify(link)
+      body: JSON.stringify(link),
     })
-    .then(checkStatus)
-    .then(parseJson)
-    .then(returnData);
+      .then(checkStatus)
+      .then(parseJson)
+      .then(returnData);
   }
 
-};
+  async delete(link) {
+    return await fetch(`${BASE_URL}/link-delete`, {
+      method: DELETE,
+      body: JSON.stringify(link),
+    })
+      .then(checkStatus)
+      .then(parseJson)
+      .then(returnData);
+  }
+}

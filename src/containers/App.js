@@ -5,20 +5,18 @@ import { Router } from '@reach/router';
 import Header, { HEADER_HEIGHT } from './Header';
 import HomePage from './HomePage';
 import AddLinkPage from './AddLinkPage';
+import GlobalStyle from 'style/global.css';
 
 const App = () => (
   <Fragment>
-    <Header
-      handleLogIn={this.handleLogIn}
-      handleSignUp={this.handleSignUp}
-      handleLogOut={this.handleLogOut}
-    />
+    <Header />
     <Main>
       <Router>
         <HomePage path="/" />
         <AddLinkPage path="add-link" />
       </Router>
     </Main>
+    <GlobalStyle />
   </Fragment>
 );
 

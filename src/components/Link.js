@@ -2,20 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Highlighter from 'react-highlight-words';
+import { deleteLink } from 'ducks/links';
 import { getColorFromVariable, addAlphaChannel } from 'style/global.css';
 import { fadeIn } from 'style/animations.css';
 
-const Link = ({ link, searchQuery, delay }) => (
+const Link = ({ link, searchQuery, user, deleteLink, delay }) => (
   <AnimatedPanel gradient={getCategoryGradient(link.category)} delay={delay}>
-    <h4>
+    <TopRow>
       <a href={link.url}>
-        <Highlighter
-          highlightClassName="highlight"
-          searchWords={[searchQuery]}
-          textToHighlight={link.title}
-        />
+        <h4>
+          <Highlighter
+            highlightClassName="highlight"
+            searchWords={[searchQuery]}
+            textToHighlight={link.title}
+          />
+        </h4>
       </a>
-    </h4>
+      {user && (
+        <Actions>
+          <Action />
+          <Action onClick={() => deleteLink(link)}>Delete</Action>
+        </Actions>
+      )}
+    </TopRow>
     <p className="info">
       Submitted by {link.submitter} on {link.submissionDate}
     </p>
@@ -53,6 +62,7 @@ const Panel = styled.li`
     color: #999;
   }
 
+  /* Used for Highlighter component */
   .highlight {
     background: linear-gradient(
       to left,
@@ -65,10 +75,35 @@ const Panel = styled.li`
   }
 `;
 
+const TopRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
+
+  ${Panel}:hover & {
+    opacity: 1;
+  }
+`;
+
+const Action = styled.span`
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--gray-600);
+  transition: color 0.1s ease-in;
+
+  &:hover {
+    color: #000;
+  }
+`;
+
 const AnimatedPanel = styled(Panel)`
   animation: ${fadeIn} 0.2s ${(p) => p.delay}ms ease-in forwards;
 `;
-
 
 function getCategoryGradient(category) {
   const c = category.toLowerCase();
@@ -101,6 +136,10 @@ function getCategoryGradient(category) {
 
 const mapStateToProps = (state) => ({
   searchQuery: state.links.searchQuery,
+  user: state.user,
 });
 
-export default connect(mapStateToProps)(Link);
+export default connect(
+  mapStateToProps,
+  { deleteLink }
+)(Link);
