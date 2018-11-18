@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { hot } from 'react-hot-loader';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Router } from '@reach/router';
 import Header, { HEADER_HEIGHT } from './Header';
 import HomePage from './HomePage';

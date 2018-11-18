@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Form, Input, Select } from 'components/forms';
 import Button from 'components/Button';
 import { addLink } from 'ducks/links';

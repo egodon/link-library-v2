@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import netlifyIdentity from 'netlify-identity-widget';
 import { connect } from 'react-redux';
 import { Link } from '@reach/router';

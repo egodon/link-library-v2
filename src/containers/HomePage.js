@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import times from 'lodash/times';
 import { getLinks } from 'ducks/links';
 import SearchBar from 'components/SearchBar';

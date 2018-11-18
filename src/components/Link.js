@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Highlighter from 'react-highlight-words';
 import { deleteLink } from 'ducks/links';
 import { getColorFromVariable, addAlphaChannel } from 'style/global.css';
 import { fadeIn } from 'style/animations.css';
 
 const Link = ({ link, searchQuery, user, deleteLink, delay }) => (
-  <AnimatedPanel gradient={getCategoryGradient(link.category)} delay={delay}>
+  <Panel gradient={getCategoryGradient(link.category)} delay={delay}>
     <TopRow>
       <a href={link.url}>
         <h4>
@@ -28,10 +28,10 @@ const Link = ({ link, searchQuery, user, deleteLink, delay }) => (
     <p className="info">
       Submitted by {link.submitter} on {link.submissionDate}
     </p>
-  </AnimatedPanel>
+  </Panel>
 );
 
-const Panel = styled.li`
+const _Panel = styled.li`
   position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   width: 100%;
@@ -75,6 +75,10 @@ const Panel = styled.li`
   }
 `;
 
+const Panel = styled(_Panel)`
+  animation: ${fadeIn} 0.2s ${(p) => p.delay}ms ease-in forwards;
+`;
+
 const TopRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -101,9 +105,7 @@ const Action = styled.span`
   }
 `;
 
-const AnimatedPanel = styled(Panel)`
-  animation: ${fadeIn} 0.2s ${(p) => p.delay}ms ease-in forwards;
-`;
+
 
 function getCategoryGradient(category) {
   const c = category.toLowerCase();
