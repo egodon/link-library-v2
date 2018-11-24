@@ -26,8 +26,7 @@
     "build": "run-p build:**",
     "build:app": "react-scripts build",
     "build:lambda": "export NODE_ENV=production && netlify-lambda build src/lambda",
-    "test": "node scripts/test.js --env=jsdom",
-    "postbuild": "react-snap"
+    "test": "node scripts/test.js --env=jsdom"
   },
   "eslintConfig": {
     "extends": "react-app"
