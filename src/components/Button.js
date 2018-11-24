@@ -11,7 +11,8 @@ const StyledButton = styled.button`
   border: 2px solid #03a9f4;
   border-radius: var(--border-radius);
   opacity: 0.8;
-  color: #03a9f4;
+  color: #fff;
+  background: linear-gradient(to bottom right, #03A9F4, #4FC3F7);
 
   &:hover {
     opacity: 1;

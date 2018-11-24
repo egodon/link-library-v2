@@ -18,6 +18,7 @@ export default createGlobalStyle`
 
     /* Colors */
     --gray-line: #E0E0E0;
+    --gray-300: #E0E0E0;
     --gray-600: #757575;
     --gray-900: #212121;
 
@@ -42,15 +43,11 @@ export default createGlobalStyle`
   li {
     list-style: none;
   }
-
+  
   a {
     color: #222;
     text-decoration: none;
     transition: all 0.15s;
-  }
-
-  a:hover {
-    color: #64b5f6;
   }
 
   button {

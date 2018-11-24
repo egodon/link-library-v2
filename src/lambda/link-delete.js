@@ -36,7 +36,7 @@ async function run(body) {
 
   const query = { _id: body._id };
 
-  Link.remove(query, (err) => {
+  Link.deleteOne(query, (err) => {
     if (err) {
       console.log(chalk.red('Error while deleting link', body.url));
       return;

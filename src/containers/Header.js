@@ -4,23 +4,23 @@ import netlifyIdentity from 'netlify-identity-widget';
 import { connect } from 'react-redux';
 import { Link } from '@reach/router';
 import { clearFilters } from 'ducks/links';
+import Logo from 'components/Logo';
+import Icon, { icons } from '../components/Icon';
 
-const Header = ({
-  user,
-  clearFilters,
-}) => (
+const Header = ({ user, clearFilters }) => (
   <Container>
     <Content>
-      <Link to="/">
+      <LogoLink to="/">
+        <Logo />
         <h1 onClick={clearFilters}>Link Library</h1>
-      </Link>
+      </LogoLink>
       {user && user.user_metadata.full_name ? (
         <div className="logged-in">
           <Link to="add-link">Add Link</Link>
-          <Link to="add-note">Add Note</Link>
           <span onClick={netlifyIdentity.logout}>
             {getInitials(user.user_metadata.full_name)}
           </span>
+          <Icon icon={icons.tripleDots} size={20} fillColor="#090909"/>
         </div>
       ) : (
         <div className="logged-out">
@@ -32,30 +32,21 @@ const Header = ({
   </Container>
 );
 
-const textColor = '#9d9d9d';
-export const HEADER_HEIGHT = '6rem';
+const textColor = '#090909';
+export const HEADER_HEIGHT = '7.4rem';
 
+// TODO: Fix background color and box shadow on scroll
 const Container = styled.header`
   position: fixed;
   top: 0;
-  background: #090909;
   color: ${textColor};
   height: ${HEADER_HEIGHT};
+  background: #fff;
   display: flex;
   align-items: center;
   margin-bottom: 2.8rem;
   width: 100vw;
   z-index: 100;
-
-  h1 {
-    font-size: 2.6rem;
-    font-weight: 500;
-  }
-
-  h1:hover {
-    color: #fff;
-    cursor: pointer;
-  }
 `;
 
 const Content = styled.div`
@@ -74,7 +65,8 @@ const Content = styled.div`
   .logged-in {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    min-width: 160px;
 
     span {
       padding: 0 6px;
@@ -100,12 +92,25 @@ const Content = styled.div`
 
   button:hover,
   a:hover {
-    color: #fff;
+    opacity: 0.8;
     cursor: pointer;
   }
+`;
 
-  a[aria-current=page] {
-    color: #fff;
+const LogoLink = styled(Link)`
+  display: flex;
+  
+  h1 {
+    font-size: 2.6rem;
+    font-weight: 500;
+    color: #090909;
+    transition: opacity .2s ease;
+    margin-left: 1.4rem;
+  }
+
+  h1:hover {
+    opacity: 0.8;
+    cursor: pointer;
   }
 `;
 

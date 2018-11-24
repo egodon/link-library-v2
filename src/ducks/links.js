@@ -9,6 +9,7 @@ export const LINKS_UPDATE = '[links] update';
 export const LINKS_ADD_REQUEST = '[links] add_request';
 export const LINKS_ADD_SUCCESS = '[links] add_success';
 export const LINKS_DELETE_REQUEST = '[links] delete_request';
+export const LINKS_DELETE_LOCAL = '[links] delete_local';
 export const LINKS_DELETE_SUCCESS = '[links] delete_success';
 export const LINKS_REQUEST_FAILED = '[links] request_failed';
 export const SELECT_CATEGORY = '[links] select_category';
@@ -80,6 +81,14 @@ export default (state = initialState, action) => {
         error: action.error,
       };
     }
+
+    case LINKS_DELETE_LOCAL: {
+      console.log([state.data, action.link.id]);
+      return {
+        ...state,
+        data: state.data.filter((link) => link._id !== action.link._id),
+      };
+    }
     case SELECT_CATEGORY:
       return {
         ...state,
@@ -137,7 +146,7 @@ function* addLinkRequest({ link }) {
 
 function* deleteLinkRequest({ link }) {
   try {
-    console.log("hey");
+    yield put({ type: LINKS_DELETE_LOCAL, link });
     const res = yield call(api.delete, link);
     yield put({ type: LINKS_DELETE_SUCCESS, res });
   } catch (error) {

@@ -15,6 +15,8 @@ const selectOptions = [
   { value: 'Other' },
 ];
 
+// TODO: Improve UX 
+
 class AddLinkPage extends Component {
   state = {
     linkData: {
