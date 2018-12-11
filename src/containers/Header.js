@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Link } from '@reach/router';
 import { clearFilters } from 'ducks/links';
 import Logo from 'components/Logo';
-import Icon, { icons } from '../components/Icon';
 
 const Header = ({ user, clearFilters }) => (
   <Container>
