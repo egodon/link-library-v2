@@ -7,8 +7,6 @@ import Icon, { icons } from 'components/Icon';
 import { getColorFromVariable, addAlphaChannel } from 'style/global.css';
 import { fadeIn } from 'style/animations.css';
 
-
-// TODO: STOP PROPATION WHEN CLICKING
 const Link = ({ link, searchQuery, user, deleteLink, delay }) => (
   <Panel href={link.url} gradient={getCategoryGradient(link.category)} delay={delay}>
     <TopRow>
@@ -21,7 +19,7 @@ const Link = ({ link, searchQuery, user, deleteLink, delay }) => (
       </h4>
       {user && (
         <Actions>
-          <Action onClick={(e) => [e.stopPropagation(), deleteLink(link)]}>
+          <Action onClick={(e) => [e.preventDefault(), deleteLink(link)]}>
             <Icon icon={icons.close} size={12} />
           </Action>
         </Actions>
@@ -35,7 +33,6 @@ const _Panel = styled.a`
   position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   width: 100%;
-  height: 6rem;
   padding: 1rem 2.4rem;
   display: flex;
   flex-direction: column;

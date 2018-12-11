@@ -20,7 +20,6 @@ const Header = ({ user, clearFilters }) => (
           <span onClick={netlifyIdentity.logout}>
             {getInitials(user.user_metadata.full_name)}
           </span>
-          <Icon icon={icons.tripleDots} size={20} fillColor="#090909"/>
         </div>
       ) : (
         <div className="logged-out">
@@ -35,7 +34,6 @@ const Header = ({ user, clearFilters }) => (
 const textColor = '#090909';
 export const HEADER_HEIGHT = '7.4rem';
 
-// TODO: Fix background color and box shadow on scroll
 const Container = styled.header`
   position: fixed;
   top: 0;

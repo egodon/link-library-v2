@@ -82,8 +82,14 @@ export default (state = initialState, action) => {
       };
     }
 
+    case LINKS_ADD_SUCCESS: {
+      return {
+        ...state,
+        data: [action.link, ...state.data],
+      };
+    }
+
     case LINKS_DELETE_LOCAL: {
-      console.log([state.data, action.link.id]);
       return {
         ...state,
         data: state.data.filter((link) => link._id !== action.link._id),
@@ -138,7 +144,7 @@ function* fetchLinks() {
 function* addLinkRequest({ link }) {
   try {
     const res = yield call(api.add, link);
-    yield put({ type: LINKS_ADD_SUCCESS, res });
+    yield put({ type: LINKS_ADD_SUCCESS, link: res });
   } catch (error) {
     yield put({ type: LINKS_REQUEST_FAILED, error });
   }

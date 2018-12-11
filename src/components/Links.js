@@ -19,7 +19,8 @@ const Links = ({ links }) => (
 );
 
 const List = styled.ul`
-  width: 80%;
+  max-width: 74rem;
+  width: 100%;
 `;
 
 const NoLinks = styled.div`

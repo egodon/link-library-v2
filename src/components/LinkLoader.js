@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentLoader from "react-content-loader";
+import styled from 'styled-components';
 
 const LinkLoader = (props) => (
   <ContentLoader
@@ -10,8 +11,11 @@ const LinkLoader = (props) => (
     secondaryColor="#ecebeb"
     {...props}
   >
-		<rect x="0" y="0" rx="5" ry="5" width="380" height="25" /> 
+		<rect x="0" y="0" rx="5" ry="5" width="400" height="25" /> 
   </ContentLoader>
 );
 
-export default LinkLoader;
+export default styled(LinkLoader)`
+  margin: 0 auto;
+  margin-bottom: 10px;
+`;

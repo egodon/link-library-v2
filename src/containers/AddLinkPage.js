@@ -15,8 +15,6 @@ const selectOptions = [
   { value: 'Other' },
 ];
 
-// TODO: Improve UX 
-
 class AddLinkPage extends Component {
   state = {
     linkData: {
@@ -38,8 +36,10 @@ class AddLinkPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { username } = this.props;
-    this.props.addLink({ ...this.state.linkData, username });
+    const { username, addLink, navigate } = this.props;
+    const res = addLink({ ...this.state.linkData, username });
+    console.log(res);
+    navigate('/');
   };
 
   render() {

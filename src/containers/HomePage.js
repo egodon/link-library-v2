@@ -10,17 +10,12 @@ import LinkLoader from 'components/LinkLoader';
 
 class Home extends Component {
   state = {
-    links: [],
     error: null,
   };
 
   componentDidMount() {
-    this.props.getLinks();
-  }
-
-  componentDidUpdate(_, prevState) {
-    if (this.props.links.data.length !== prevState.links.length) {
-      this.setState({ links: this.props.links.data });
+    if (this.props.links.data.length === 0) {
+      this.props.getLinks();
     }
   }
 
@@ -48,14 +43,17 @@ class Home extends Component {
 
   filterLinks = (links) =>
     links.filter(this.filterByCategory).filter(this.filterBySearch);
+
   render() {
-    const displayedLinks = this.filterLinks(this.state.links);
+    const { props: _p } = this;
+
+    const displayedLinks = this.filterLinks(_p.links.data);
 
     return (
       <Container>
         <SearchBar />
         <Categories />
-        {this.props.links.fetching ? (
+        {_p.links.fetching ? (
           times(20, (index) => <LinkLoader key={index} />)
         ) : (
           <Links
@@ -72,7 +70,9 @@ const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem;
+  padding: 4rem 0;
+  max-width: 74rem;
+  margin: 0 auto;
 `;
 
 const mapStateToProps = (state) => ({
